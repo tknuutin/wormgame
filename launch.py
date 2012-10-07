@@ -1,6 +1,6 @@
 import pygame
 import sys, logging
-import inputs
+import control
 
 logging.basicConfig(filename='wormgame_last.log',level=logging.DEBUG, format='%(asctime)s %(message)s')
 SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1024, 768
@@ -22,8 +22,9 @@ def start():
 
     mapscreen.fill(pygame.Color("black"))
 
-    while True:
+    ctrl = control.Controller()
 
+    while True:
         #copy mapscreen contents to main screen
         screen.blit(mapscreen, maprect)
         pygame.display.flip()
@@ -32,7 +33,7 @@ def start():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            inputs.process(event)
+            ctrl.process(event)
 
         #limit fps
         clock.tick(30)
