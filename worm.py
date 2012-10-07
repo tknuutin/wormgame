@@ -8,6 +8,7 @@ SOUTHEAST = "southeast"
 SOUTHWEST = "southwest"
 
 class Worm:
+
     
     def __init__(self, start_position, direction):
         """A new worm is created with starting coordinates (x, y) and direction string."""
@@ -15,6 +16,7 @@ class Worm:
         self.sections = [start_position]
         self.direction = direction
         self.grow_bool = True
+
         
     def move(self, direction):
         """Worm moves to the specified direction and grows 
@@ -43,51 +45,41 @@ class Worm:
             
         if len(self.sections) > 3:
             self.grow_bool = False
-            
+        
+        
     def turn_left(self):
         """Worm changes it's direction."""
+        directions = {NORTHEAST : NORTHWEST, EAST : NORTHEAST, 
+            SOUTHEAST : EAST, SOUTHWEST : SOUTHEAST, 
+            WEST : SOUTHWEST, NORTHWEST : WEST}
     
-        if self.direction == NORTHEAST:
-            self.direction = NORTHWEST
-        elif self.direction == EAST:
-            self.direction = NORTHEAST
-        elif self.direction == SOUTHEAST:
-            self.direction = EAST;
-        elif self.direction == SOUTHWEST:
-            self.direction = SOUTHEAST;
-        elif self.direction == WEST:
-            self.direction = SOUTHWEST
-        elif self.direction == NORTHWEST:
-            self.direction == WEST
-
+        self.direction = directions[self.direction]
+    
         
     def turn_right(self):
         """Worm changes it's direction."""
-        if self.direction == NORTHEAST:
-            self.direction = EAST
-        elif self.direction == EAST:
-            self.direction = SOUTHEAST
-        elif self.direction == SOUTHEAST:
-            self.direction = SOUTHWEST
-        elif self.direction == SOUTHWEST:
-            self.direction = WEST
-        elif self.direction == WEST:
-            self.direction = NORTHWEST
-        elif self.direction == NORTHWEST:
-            self.direction = NORTHEAST
+        
+        directions = {NORTHEAST : EAST, EAST : SOUTHEAST, 
+            SOUTHEAST : SOUTHWEST, SOUTHWEST : WEST, 
+            WEST : NORTHWEST, NORTHWEST : NORTHEAST}
+    
+        self.direction = directions[self.direction]     
 
         
     def forward(self):
         """Worm moves without changing direction."""
         self.move(self.direction)
         
+        
     def grow(self):
         """Worm grows one unit in length time the worm moves."""
         self.grow_bool = True
         
+        
     def get_sections(self):
         """Returns a list of the coordinates the worm occupies."""
         return self.sections
+        
         
 if __name__ == "__main__":
     wyrm = Worm((0, 20), SOUTHEAST)
