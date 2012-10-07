@@ -1,6 +1,5 @@
-
 import pygame
-import menu, ui, server
+import menu, ui, server, serverlogic
 import sys
 
 class View(object):
@@ -15,10 +14,16 @@ class View(object):
 
         self.gameui = ui.GameUI(screen_size)
 
-    def draw(self):
+    def draw_worms(self, game):
+        for player in game.players:
+            player.worm.update_draw_rects()
+            pygame.draw.ellipse(self.mapscreen, (255, 0, 0), player.worm.rect)
+
+    def draw(self, game):
         """Draw the whole game screen."""
         #wipe all screens with black
         self.mapscreen.fill((0, 0, 0))
+        self.draw_worms(game)
 
         if self.ingame:
             #draw ui on top of the map if in game
@@ -38,10 +43,8 @@ class View(object):
             self.menu.hide()
 
 class Controller(object):
-    def __init__(self, screen_size):
-        self.client_player = None #TODO: make this a player
-        self.players = [self.client_player]
-        self.server = server.SelectServer()
+    def __init__(self, screen_size, is_server=True):
+        self.game = serverlogic.Game()
 
         #TODO: load this from config
         self.config = {"TURN_LEFT" : pygame.K_RIGHT, "TURN_RIGHT" : pygame.K_LEFT}
@@ -49,17 +52,17 @@ class Controller(object):
 
         self.quit = False
 
+        self.game.start()
+
     def tick(self):
         """Calculate next tick of the game"""
-        for event in self.server.get_updates():
-            print event
         pass
 
     def add_player(self):
         pass
 
     def draw(self):
-        return self.view.draw()
+        return self.view.draw(self.game)
 
     def quit_game(self):
         self.quit = True
