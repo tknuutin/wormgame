@@ -11,7 +11,7 @@ class Menu(object):
         self.visible = False
 
     def draw(self, game_screen):
-        title_text = self.title_font.render("WormGame!! Holy Shit!! Press Q to quit.", False, (255, 255, 255))
+        title_text = self.title_font.render("Game paused. Press Q to quit.", False, (255, 255, 255))
         game_screen.blit(title_text, self.title_rect)
 
     def show(self):
