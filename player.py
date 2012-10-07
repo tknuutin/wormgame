@@ -3,7 +3,8 @@ Player
 """
 import pygame
 
-def __init__(self, w, n, s):
-   self.worm = w
-   self.name = n
-   self.socket = s
+class Player(object):
+    def __init__(self, worm=None, name="", socket=None):
+        self.worm = worm
+        self.name = name
+        self.socket = socket
