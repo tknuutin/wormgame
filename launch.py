@@ -1,8 +1,8 @@
 import pygame
-import sys
+import sys, logging
 import inputs
 
-print "hello wormgame"
+logging.basicConfig(filename='wormgame_last.log',level=logging.DEBUG)
 SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1024, 768
 
 def main():
@@ -11,6 +11,7 @@ def main():
 def start():
     pygame.init()
 
+    logging.info("Starting Wormgame")
     #screen is the lowermost layer of the screen
     screen = pygame.display.set_mode(SCREEN_SIZE)
     clock = pygame.time.Clock()
@@ -35,6 +36,8 @@ def start():
 
         #limit fps
         clock.tick(30)
+
+    logging.info("Quitting Wormgame")
 
 if __name__ == "__main__":
     main()
