@@ -18,7 +18,7 @@ class View(object):
     def draw(self):
         """Draw the whole game screen."""
         #wipe all screens with black
-        self.mapscreen.fill((0, 0, 0))
+        self.mapscreen.fill(pygame.Color("black"))
 
         if self.ingame:
             #draw ui on top of the map if in game
@@ -91,7 +91,7 @@ class Controller(object):
                 pass
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_ESCAPE:
-                self.toggle_menu()
+                self.view.toggle_menu()
             elif event.key == pygame.K_q:
                 self.quit_game()
 
