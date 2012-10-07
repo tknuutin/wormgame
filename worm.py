@@ -45,7 +45,7 @@ class Worm:
             self.grow_bool = False
             
     def turn_left(self):
-        """Worm moves to a direction to the left from the previous direction."""
+        """Worm changes it's direction."""
     
         if self.direction == NORTHEAST:
             self.direction = NORTHWEST
@@ -59,10 +59,10 @@ class Worm:
             self.direction = SOUTHWEST
         elif self.direction == NORTHWEST:
             self.direction == WEST
-        self.move(self.direction)
+
         
     def turn_right(self):
-        """Worm moves to a direction to the right from the previous direction."""
+        """Worm changes it's direction."""
         if self.direction == NORTHEAST:
             self.direction = EAST
         elif self.direction == EAST:
@@ -75,7 +75,7 @@ class Worm:
             self.direction = NORTHWEST
         elif self.direction == NORTHWEST:
             self.direction = NORTHEAST
-        self.move(self.direction)
+
         
     def forward(self):
         """Worm moves without changing direction."""
