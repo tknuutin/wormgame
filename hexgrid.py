@@ -56,10 +56,10 @@ class HexGrid:
         self._check_coords(x, y - 1)
         return x, y - 1
         
-    def get_north(self, x, y):
+    def get_southeast(self, x, y):
         
-        self._check_coords(x + 1, y - 1)
-        return x + 1, y - 1
+        self._check_coords(x + 1, y)
+        return x + 1, y
 
     def print_grid(self):
         
