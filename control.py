@@ -6,7 +6,10 @@ import sys
 class Controller(object):
     def __init__(self, screen_size):
         self.player = None
+
+        #TODO: load this from config
         self.config = {"TURN_LEFT" : pygame.K_RIGHT, "TURN_RIGHT" : pygame.K_LEFT}
+
         self.menu = menu.Menu(screen_size)
         self.ingame = True
 

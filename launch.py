@@ -18,7 +18,10 @@ def start():
 
     ctrl = control.Controller(SCREEN_SIZE)
 
+    start = pygame.time.get_ticks()
     while not ctrl.quit:
+        ctrl.gameui.set_time_elapsed(pygame.time.get_ticks() - start)
+
         #copy mapscreen contents to main screen
         mapscreen, maprect = ctrl.draw()
         screen.blit(mapscreen, maprect)

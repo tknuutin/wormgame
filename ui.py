@@ -14,10 +14,17 @@ class GameText(object):
 
 class GameUI(object):
     def __init__(self, screen_size):
-        self.text_elements = [GameText(50, 600, 100, 25, text="You are in game. Press ESC for menu.")]
+        self.clock = GameText(180, 50, 100, 25, font_size=24)
+        self.text_elements = [GameText(50, 600, 100, 25, text="You are in game. Press ESC for menu."),
+                              GameText(50, 50, 100, 25, font_size=24, text="Time elapsed: "),
+                              GameText(210, 50, 100, 25, font_size=24, text="seconds"),
+                              self.clock]
 
         self.screen = pygame.Surface(screen_size)
         self.screen = self.screen.get_rect()
+
+    def set_time_elapsed(self, time):
+        self.clock.text = str(round(time / 1000.0, 1))
 
     def add_text_element(self, gametext):
         self.text_elements.append(gametext)
