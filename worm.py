@@ -10,11 +10,17 @@ SOUTHWEST = "southwest"
 class Worm:
     
     def __init__(self, start_position, direction):
+        """A new worm is created with starting coordinates (x, y) and direction string."""
+        
         self.sections = [start_position]
         self.direction = direction
         self.grow_bool = True
         
     def move(self, direction):
+        """Worm moves to the specified direction and grows 
+        if self.grow() has been called. Worm grows until it 
+        reaches the length of 3."""
+        
         x, y = self.sections[0] 
         self.direction = direction
         
@@ -39,6 +45,8 @@ class Worm:
             self.grow_bool = False
             
     def turn_left(self):
+        """Worm moves to a direction to the left from the previous direction."""
+    
         if self.direction == NORTHEAST:
             self.direction = NORTHWEST
         elif self.direction == EAST:
@@ -54,6 +62,7 @@ class Worm:
         self.move(self.direction)
         
     def turn_right(self):
+        """Worm moves to a direction to the right from the previous direction."""
         if self.direction == NORTHEAST:
             self.direction = EAST
         elif self.direction == EAST:
@@ -69,12 +78,15 @@ class Worm:
         self.move(self.direction)
         
     def forward(self):
+        """Worm moves without changing direction."""
         self.move(self.direction)
         
     def grow(self):
+        """Worm grows one unit in length time the worm moves."""
         self.grow_bool = True
         
     def get_sections(self):
+        """Returns a list of the coordinates the worm occupies."""
         return self.sections
         
 if __name__ == "__main__":
