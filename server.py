@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-asdf
+Module for communication from and to clients.
 """
 
 import socket
@@ -8,12 +8,13 @@ import select
 
 class SelectServer:
     """
-    asdf
+    Server implementation that uses the select system call in a non-blocking mode
+    to read data from clients and to accept new clients.
     """
 
     def __init__(self, host="127.0.0.1", port=1337):
         """
-        asdf
+        Initialize a listening socket server
         """
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -24,8 +25,11 @@ class SelectServer:
 
     def get_updates(self):
         """
-        select the socket to receive from
+        Receives information about new incoming clients and incoming data from clients.
+        Returns the received information as a list of events.
         """
+        client_events = []
+
         rlist = self.clients + [self.server]
         wlist = []
         xlist = []
@@ -38,30 +42,37 @@ class SelectServer:
         except socket.error, e:
             pass # TODO!
 
+        # Receive data from sockets that are ready to be read
         for sock in rready:
             if sock == self.server:
+                # A new client is connecting - accept the connection
                 client, address = self.server.accept()
-                print "New connection established with %s, port %d." % (address[0], address[1])
                 self.clients.append(client)
-                # TODO: Instantiate a new player
+                event = {"type" : "new_connection", "address" : address[0], "port" : address[1], "socket" : client, "added" : True}
+                client_events.append(event)
             else:
                 try:
                     data = sock.recv(4096)
                     if data:
                         # Got data from a player
-                        # TODO: Add this data to a command queue of
-                        # the player in question
-                        print "Data: %s" % (data)
+                        event = {"type" : "received_data", "socket" : sock, "data" : data}
+                        client_events.append(event)
                     else:
-                        print "%s hung up" % (sock.fileno())
+                        # The client hung up
                         self.clients.remove(sock)
+                        event = {"type" : "hang_up", "socket" : sock, "removed" : True}
+                        client_events.append(event)
                 except socket.error, e:
-                    print "%s error'd" % (sock.fileno())
+                    # An error occured reading the client
                     self.clients.remove(sock)
+                    event = {"type" : "socket_error", "socket" : sock, "error" : e, "removed" : True}
+                    client_events.append(event)
+        return client_events
 
 if __name__ == "__main__":
     my_server = SelectServer()
 
     while True:
-        my_server.get_updates()
-
+        updates = my_server.get_updates()
+        if updates:
+            print updates
