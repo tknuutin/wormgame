@@ -15,6 +15,7 @@ class HexGrid:
         
         add_column = lambda: [WALL for y in range(0, self.height)]
         grid = [add_column() for x in range(0, self.width)]
+        print grid
         for x in range(1, self.width - 1):
             for y in range(1, self.height - 1):
                 grid[x][y] = FLOOR
@@ -31,44 +32,66 @@ class HexGrid:
         self._check_coords(x, y)
         return grid[x][y]
         
-    def get_northwest(self, x, y):
+    def _get_left(self, x, y):
         
-        self._check_coords(x - 1, y + 1)
-        return x - 1, y + 1
+        self._check_coords(x - 1, y)
+        return x - 1, y
+        
+    def _get_right(self, x, y):
+        
+        self._check_coords(x - 1, y)
+        return x + 1, y
+        
+    def get_southwest(self, x, y):
+        
+        if x % 2 == 0:    
+            self._check_coords(x - 1, y + 1)
+            return x - 1, y + 1
+        else:
+            return self._get_left(x, y)
             
-    def get_north(self, x, y):
+    def get_south(self, x, y):
         
         self._check_coords(x, y + 1)
         return x, y + 1
         
-    def get_northeast(self, x, y):
+    def get_southeast(self, x, y):
         
-        self._check_coords(x + 1, y + 1)
-        return x + 1, y + 1
+        if x % 2 == 0:
+            self._check_coords(x + 1, y + 1)
+            return x + 1, y + 1
+        else:
+            return self._get_right(x, y)
     
-    def get_southwest(self, x, y):
+    def get_northwest(self, x, y):
         
-        self._check_coords(x - 1, y)
-        return x - 1, y
+        if x % 2 == 0:
+            return self._get_left(x, y)
+        else:
+            self._check_coords(x - 1, y - 1)
+            return x - 1, y - 1
     
-    def get_south(self, x, y):
+    def get_north(self, x, y):
         
         self._check_coords(x, y - 1)
         return x, y - 1
         
-    def get_southeast(self, x, y):
+    def get_northeast(self, x, y):
         
-        self._check_coords(x + 1, y)
-        return x + 1, y
+        if x % 2 == 0:    
+            return self._get_right(x, y)
+        else:
+            self._check_coords(x + 1, y - 1)
+            return x + 1, y - 1
 
     def print_grid(self):
         
-        for row in self.grid:
-            for square in row:
-                print square,
+        for y in range(0, self.height):
+            for x in range(0, self.width):
+                print self.grid[x][y],
             print ""
     
-class InvalidCoordsError:
+class InvalidCoordsError(Exception):
     
     def __init__(self, message, x, y):
         
@@ -82,4 +105,38 @@ class InvalidCoordsError:
 if __name__ == "__main__":
     hexgrid = HexGrid(15, 15)
     hexgrid.print_grid()
-    hexgrid.is_floor(15, 15)
+    hexgrid.grid[7][7] = False
+    print ""
+    hexgrid.print_grid()
+    x, y = hexgrid.get_northeast(7, 7)
+    hexgrid.grid[7][7] = True
+    hexgrid.grid[x][y] = False
+    print ""
+    hexgrid.print_grid()
+    hexgrid.grid[x][y] = True
+    x, y = hexgrid.get_northwest(x, y)
+    hexgrid.grid[x][y] = False
+    print ""
+    hexgrid.print_grid()
+    hexgrid.grid[x][y] = True
+    x, y = hexgrid.get_north(x, y)
+    hexgrid.grid[x][y] = False
+    print ""
+    hexgrid.print_grid()
+    hexgrid.grid[x][y] = True
+    x, y = hexgrid.get_south(x, y)
+    hexgrid.grid[x][y] = False
+    print ""
+    hexgrid.print_grid()
+    hexgrid.grid[x][y] = True
+    x, y = hexgrid.get_southeast(x, y)
+    hexgrid.grid[x][y] = False
+    print ""
+    hexgrid.print_grid()
+    hexgrid.grid[x][y] = True
+    x, y = hexgrid.get_southwest(x, y)
+    hexgrid.grid[x][y] = False
+    print ""
+    hexgrid.print_grid()
+    
+    
