@@ -96,7 +96,9 @@ class Controller(object):
                 self.quit_game()
 
     def process(self, event):
-        if self.view.ingame:
+        if event.type == pygame.QUIT:
+            self.quit = True
+        elif self.view.ingame:
             self._process_ingame(event)
         else:
             self._process_menu(event)
