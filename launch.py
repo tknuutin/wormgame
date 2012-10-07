@@ -16,23 +16,16 @@ def start():
     screen = pygame.display.set_mode(SCREEN_SIZE)
     clock = pygame.time.Clock()
 
-    #mapscreen is the layer for all the non-UI elements
-    mapscreen = pygame.Surface(SCREEN_SIZE)
-    maprect = mapscreen.get_rect()
+    ctrl = control.Controller(SCREEN_SIZE)
 
-    mapscreen.fill(pygame.Color("black"))
-
-    ctrl = control.Controller()
-
-    while True:
+    while not ctrl.quit:
         #copy mapscreen contents to main screen
+        mapscreen, maprect = ctrl.draw()
         screen.blit(mapscreen, maprect)
         pygame.display.flip()
 
         #if we get an exit command, quit
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
             ctrl.process(event)
 
         #limit fps
