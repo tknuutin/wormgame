@@ -21,6 +21,7 @@ def start():
     start = pygame.time.get_ticks()
     while not ctrl.quit:
         ctrl.view.gameui.set_time_elapsed(pygame.time.get_ticks() - start)
+        ctrl.tick()
 
         #copy mapscreen contents to main screen
         mapscreen, maprect = ctrl.draw()

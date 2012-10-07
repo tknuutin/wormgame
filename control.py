@@ -1,6 +1,6 @@
 
 import pygame
-import menu, ui
+import menu, ui, server
 import sys
 
 class View(object):
@@ -39,13 +39,24 @@ class View(object):
 
 class Controller(object):
     def __init__(self, screen_size):
-        self.player = None
+        self.client_player = None #TODO: make this a player
+        self.players = [self.client_player]
+        self.server = server.SelectServer()
 
         #TODO: load this from config
         self.config = {"TURN_LEFT" : pygame.K_RIGHT, "TURN_RIGHT" : pygame.K_LEFT}
         self.view = View(screen_size)
 
         self.quit = False
+
+    def tick(self):
+        """Calculate next tick of the game"""
+        for event in self.server.get_updates():
+            print event
+        pass
+
+    def add_player(self):
+        pass
 
     def draw(self):
         return self.view.draw()
