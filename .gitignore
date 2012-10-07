@@ -2,6 +2,9 @@
 ## Eclipse
 #################
 
+# project logs
+*.log
+
 *.pydevproject
 .project
 .metadata
