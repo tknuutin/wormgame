@@ -1,5 +1,6 @@
 import pygame
 import sys
+import inputs
 
 print "hello wormgame"
 SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1024, 768
@@ -30,7 +31,8 @@ def start():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-        
+            inputs.process(event)
+
         #limit fps
         clock.tick(30)
 
