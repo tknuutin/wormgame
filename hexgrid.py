@@ -20,17 +20,17 @@ class HexGrid:
                 grid[x][y] = FLOOR
             
         return grid
-        
-    def is_floor(self, x, y):
-        
-        self._check_coors(x, y)
-        return grid[x][y]
-
+    
     def _check_coords(self, x, y):
         
         if not 0 <= x < self.width or not 0 <= y < self.height:
             raise InvalidCoordsError("Coordinates out of grid:", x, y)
     
+    def is_floor(self, x, y):
+        
+        self._check_coords(x, y)
+        return grid[x][y]
+        
     def get_northwest(self, x, y):
         
         self._check_coords(x - 1, y + 1)
@@ -82,3 +82,4 @@ class InvalidCoordsError:
 if __name__ == "__main__":
     hexgrid = HexGrid(15, 15)
     hexgrid.print_grid()
+    hexgrid.is_floor(15, 15)
