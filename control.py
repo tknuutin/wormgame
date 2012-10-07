@@ -3,13 +3,8 @@ import pygame
 import menu, ui
 import sys
 
-class Controller(object):
+class View(object):
     def __init__(self, screen_size):
-        self.player = None
-
-        #TODO: load this from config
-        self.config = {"TURN_LEFT" : pygame.K_RIGHT, "TURN_RIGHT" : pygame.K_LEFT}
-
         self.menu = menu.Menu(screen_size)
         self.ingame = True
 
@@ -19,11 +14,6 @@ class Controller(object):
         self.mapscreen.fill(pygame.Color("black"))
 
         self.gameui = ui.GameUI(screen_size)
-
-        self.quit = False
-
-    def quit_game(self):
-        self.quit = True
 
     def draw(self):
         """Draw the whole game screen."""
@@ -47,6 +37,22 @@ class Controller(object):
         else:
             self.menu.hide()
 
+class Controller(object):
+    def __init__(self, screen_size):
+        self.player = None
+
+        #TODO: load this from config
+        self.config = {"TURN_LEFT" : pygame.K_RIGHT, "TURN_RIGHT" : pygame.K_LEFT}
+        self.view = View(screen_size)
+
+        self.quit = False
+
+    def draw(self):
+        return self.view.draw()
+
+    def quit_game(self):
+        self.quit = True
+
     def _process_ingame(self, event):
         """Process all IN GAME key and mouse events here"""
         if event.type == pygame.KEYDOWN:
@@ -61,7 +67,7 @@ class Controller(object):
                 self.player.worm.turn_left()
 
             elif event.key == pygame.K_ESCAPE:
-                self.toggle_menu()
+                self.view.toggle_menu()
 
     def _process_menu(self, event):
         """Process all MENU key and mouse events here"""
@@ -79,7 +85,7 @@ class Controller(object):
                 self.quit_game()
 
     def process(self, event):
-        if self.ingame:
+        if self.view.ingame:
             self._process_ingame(event)
         else:
             self._process_menu(event)
