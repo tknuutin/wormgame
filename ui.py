@@ -14,7 +14,7 @@ class GameText(object):
 
 class GameUI(object):
     def __init__(self, screen_size):
-        self.text_elements = [GameText(50, 600, 100, 25, "You are in game. Press ESC for menu.")]
+        self.text_elements = [GameText(50, 600, 100, 25, text="You are in game. Press ESC for menu.")]
 
         self.screen = pygame.Surface(screen_size)
         self.screen = self.screen.get_rect()
