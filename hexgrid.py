@@ -32,14 +32,14 @@ class HexGrid:
         self._check_coords(x, y)
         return grid[x][y]
         
-    def _get_left(self, x, y):
+    def _get_prev_x(self, x, y):
         
         self._check_coords(x - 1, y)
         return x - 1, y
         
-    def _get_right(self, x, y):
+    def _get_next_x(self, x, y):
         
-        self._check_coords(x - 1, y)
+        self._check_coords(x + 1, y)
         return x + 1, y
         
     def get_southwest(self, x, y):
@@ -48,7 +48,7 @@ class HexGrid:
             self._check_coords(x - 1, y + 1)
             return x - 1, y + 1
         else:
-            return self._get_left(x, y)
+            return self._get_prev_x(x, y)
             
     def get_south(self, x, y):
         
@@ -61,12 +61,12 @@ class HexGrid:
             self._check_coords(x + 1, y + 1)
             return x + 1, y + 1
         else:
-            return self._get_right(x, y)
+            return self._get_next_x(x, y)
     
     def get_northwest(self, x, y):
         
         if x % 2 == 0:
-            return self._get_left(x, y)
+            return self._get_prev_x(x, y)
         else:
             self._check_coords(x - 1, y - 1)
             return x - 1, y - 1
@@ -79,7 +79,7 @@ class HexGrid:
     def get_northeast(self, x, y):
         
         if x % 2 == 0:    
-            return self._get_right(x, y)
+            return self._get_next_x(x, y)
         else:
             self._check_coords(x + 1, y - 1)
             return x + 1, y - 1
