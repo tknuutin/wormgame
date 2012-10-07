@@ -28,7 +28,7 @@ class HexGrid:
 
     def _check_coords(self, x, y):
         
-        if not 0 <= x <= self.width or not 0 <= y <= self.height:
+        if not 0 <= x < self.width or not 0 <= y < self.height:
             raise InvalidCoordsError("Coordinates out of grid:", x, y)
     
     def get_northwest(self, x, y):
