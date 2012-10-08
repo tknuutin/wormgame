@@ -1,5 +1,5 @@
 import pygame
-import menu, ui, server, serverlogic
+import menu, ui, server, serverlogic, hexgrid
 import sys
 
 class View(object):
@@ -13,6 +13,7 @@ class View(object):
         self.mapscreen.fill(pygame.Color("black"))
 
         self.gameui = ui.GameUI(screen_size)
+        self.hexgrid = hexgrid.GridDrawer(screen_size)
 
     def draw_worms(self, game):
         for player in game.players:

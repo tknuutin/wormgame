@@ -1,11 +1,13 @@
 ﻿# -*- coding: utf-8 -*-
 """Contains a hexagonal grid class the game uses as a base for its levels."""
 
-
 WALL = False
 FLOOR = True
+WALL_PATH = ""
+FLOOR_PATH = ""
+HEX_WIDTH, HEX_HEIGHT = 60, 52
 
-class HexGrid:
+class HexGrid(object):
     """A class that acts as a hexagonal grid for the game to determine the dimensions of its levels."""
     
     def __init__(self, width, height):
@@ -115,6 +117,34 @@ class HexGrid:
             for x in range(0, self.width):
                 print self.grid[x][y],
             print ""
+            
+class GridDrawer(object):
+    
+    def __init__(self, screen_size):
+        
+        screen_width, screen_height = screen_size
+        grid_width = (screen_width - HEX_WIDTH) / (3 * HEX_WIDTH / 4) + 1
+        grid_height = (screen_height - HEX_HEIGHT / 2) / HEX_HEIGHT
+        self.grid = HexGrid(grid_width, grid_height)
+        self._surface = pygame.Surface(screen_size)
+        self._floor_hex = pygame.image.load(FLOOR_PATH)
+        self._wall_hex = pygame.image.load(WALL_PATH)
+        
+    def draw_grid():
+        
+        for x in range(0, self.grid.width):
+            for y in range(0, self.grid.height):
+                if self.grid.is_floor(x, y):
+                    hex = self._floor_hex.copy()
+                else:
+                    hex = self._wall_hex.copy()
+                if x % 2 == 0:
+                    self._surface.blit(hex, (x * (3 * HEX_WIDTH / 4), y * HEX_HEIGHT + HEX_HEIGHT / 2)
+                else:
+                    self._surface.blit(hex, (x * (3 * HEX_WIDTH / 4), y * HEX_HEIGHT)
+                    
+        return self._surface
+            
     
 class InvalidCoordsError(Exception):
     
