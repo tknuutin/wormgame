@@ -3,7 +3,7 @@ import sys, logging
 import control
 
 logging.basicConfig(filename='wormgame_last.log',level=logging.DEBUG, format='%(asctime)s %(message)s')
-SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1024, 768
+SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1050, 806
 
 def main():
     start()

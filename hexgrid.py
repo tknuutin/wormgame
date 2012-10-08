@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Contains a hexagonal grid class the game uses as a base for its levels."""
 
 WALL = False
